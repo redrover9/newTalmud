@@ -4,8 +4,8 @@ mongoClient = pymongo.MongoClient("mongodb://localhost:27017/")
 sefariaDB = mongoClient["sefaria"]
 sefariaDBTexts = sefariaDB["texts"]
 
-masekhtotQuery = {"versionTitle": "William Davidson Edition - English", "$nor": tuple([{"title": "/Mishnah/i"}, {"title": "/Jerusalem Talmud Shekalim/i"}, {"title": "/Introductions to the Babylonian Talmud/i"}])}
-masekhtot = sefariaDBTexts.find(masekhtotQuery)
+masekhotQuery = {"versionTitle": 'William Davidson Edition - English', "$nor": tuple([{ "title": {"$regex": "^Mishnah"}}, {"title": {"$regex": "^Jerusalem Talmud Shekalim"}}, {"title": {"$regex": "^Introductions to the Babylonian Talmud"}}])}
+masekhot = sefariaDBTexts.find(masekhotQuery)
 
-for pasuk in masekhtot:
-  print(pasuk)
+for pasuk in masekhot:
+  print(pasuk["title"])
